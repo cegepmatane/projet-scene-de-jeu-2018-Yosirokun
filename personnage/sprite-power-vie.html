@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<canvas id="dessin" width="1500" height="1500"></canvas>
+
+<script type="text/javascript" src="easeljs-0.8.2.min.js"></script>
+<script>
+    // Préparation de la scene
+	var dessin = document.getElementById("dessin");
+    var scene = new createjs.Stage(dessin);
+    createjs.Ticker.addEventListener("tick", rafraichirJeu);
+    createjs.Ticker.setInterval(0);
+   createjs.Ticker.setFPS(15);
+    function rafraichirJeu(evenement)
+    {
+        scene.update();
+    }
+    
+ 
+    var imagePowerVie = new Image();
+    imagePowerVie.src = "vie-powerup1.png";
+    
+    var spritePowerVie = new createjs.SpriteSheet(
+        {
+            images:[imagePowerVie],
+            frames:{width:32,height:29},
+            animations:
+            {
+                ilumine:[1,2,3,4,5,6,]
+            }
+        }
+    );
+    
+    var animationPowerVie = new createjs.Sprite(spritePowerVie, "ilumine");
+    
+    scene.addChild(animationPowerVie);
+	animationPowerVie.play();
+	
+</script>
+
+</body>
+</html>

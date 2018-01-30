@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<canvas id="dessin" width="1500" height="1500"></canvas>
+
+<script type="text/javascript" src="easeljs-0.8.2.min.js"></script>
+<script>
+    // Préparation de la scene
+	var dessin = document.getElementById("dessin");
+    var scene = new createjs.Stage(dessin);
+    createjs.Ticker.addEventListener("tick", rafraichirJeu);
+    createjs.Ticker.setInterval(0);
+   createjs.Ticker.setFPS(10);
+    function rafraichirJeu(evenement)
+    {
+        scene.update();
+    }
+    
+ 
+    var imageBlop = new Image();
+    imageBlop.src = "blop.png";
+    
+    var spriteBlop = new createjs.SpriteSheet(
+        {
+            images:[imageBlop],
+            frames:{width:800,height:799},
+            animations:
+            {
+                saute:[1,2,3,4,5,6]
+            }
+        }
+    );
+    
+    var animationBlop = new createjs.Sprite(spriteBlop, "saute");
+    
+    scene.addChild(animationBlop);
+	animationBlop.play();
+	
+</script>
+
+</body>
+</html>
