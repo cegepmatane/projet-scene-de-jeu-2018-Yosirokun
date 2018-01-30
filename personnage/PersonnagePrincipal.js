@@ -19,6 +19,23 @@ function PersonnagePrincipal(dessin)
    {
      dessin.drawImage(blop, 10,10);   
    }
+   
+   this.deplacerDroite = function()
+   {
+       
+   }
+   this.deplacerGauche = function()
+   {
+       
+   }
+   this.sauter = function()
+   {
+       
+   }
+   this.gobber = function()
+   {
+       
+   }
     
    initialiser(); 
 }
