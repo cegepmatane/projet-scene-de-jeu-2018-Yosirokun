@@ -5,7 +5,7 @@ function PersonnagePrincipal(dessin)
   this.estCharge = false;
   function initialiser()
    {
-     blop.src = "personnagePrincipal.png";
+     blop.src = "personnage/personnagePrincipal.png";
         
      blop.onload = noterFinChargement;
  

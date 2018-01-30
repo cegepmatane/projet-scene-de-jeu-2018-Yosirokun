@@ -5,7 +5,7 @@ function Ennemi(dessin)
   this.estCharge = false;
   function initialiser()
    {
-     monstre.src = "papillon-vert.png";
+     monstre.src = "personnage/ennemi.png";
         
      monstre.onload = noterFinChargement;
  
