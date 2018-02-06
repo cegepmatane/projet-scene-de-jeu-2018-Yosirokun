@@ -21,29 +21,30 @@ function PersonnagePrincipal(dessin)
        
     
         this.jouerAnimation = function(){
-            animationBlop.play();
+            this.animationBlop.play();
         }
         
   
    
    this.deplacerDroite = function()
    {
-       this.x += 0.5;
+       this.animationBlop.x += 5;
        
    }
    this.deplacerGauche = function()
    {
-       this.x -= 0.5;
+       this.animationBlop.x -= 5
        
    }
    this.sauter = function()
    {
-       while(var i != 10)
+       var i = 0;
+       while(i != 10)
        {
         if(i < 5)
-            this.y += 0.1;
+            {this.animationBlop.y += 4;}
         else
-            this.y -= 0.1;
+        {this.animationBlop.y -= 4;}
         i++;   
        }
 

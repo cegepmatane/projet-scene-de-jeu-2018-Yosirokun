@@ -18,7 +18,38 @@ var hero = new PersonnagePrincipal(dessin);
 scene.addChild(hero.animationBlop);
 hero.jouerAnimation();
     
+    var TOUCHE_GAUCHE = 37; 
+    var TOUCHE_DROITE = 39;
+    var TOUCHE_ESPACE = 32;
+    var TOUCHE_CONTROLE = 17;
+
+    function gererTouche(evenement)
+    {
+        
+     switch(evenement.keyCode)
+            {
+                case TOUCHE_GAUCHE:
+                   
+                    hero.deplacerGauche();
+                break;
+                case TOUCHE_DROITE:
+                  
+                    hero.deplacerDroite();
+                break;
+                case TOUCHE_ESPACE:
+                    
+                    hero.saute();
+                break;
+                case TOUCHE_CONTROLE:
+                    
+                    hero.gobber();
+                break;
+            }
+        
+            scene.update();   
+    }
     
+    this.document.onkeydown = gererTouche;
 
     
 })();
