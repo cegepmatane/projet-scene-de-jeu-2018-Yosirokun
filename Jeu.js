@@ -38,7 +38,7 @@ hero.jouerAnimation();
                 break;
                 case TOUCHE_ESPACE:
                     
-                    hero.saute();
+                    hero.sauter();
                 break;
                 case TOUCHE_CONTROLE:
                     

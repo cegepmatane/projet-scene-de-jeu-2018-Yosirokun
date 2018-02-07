@@ -28,12 +28,12 @@ function PersonnagePrincipal(dessin)
    
    this.deplacerDroite = function()
    {
-       this.animationBlop.x += 5;
+       this.animationBlop.x += 20;
        
    }
    this.deplacerGauche = function()
    {
-       this.animationBlop.x -= 5
+       this.animationBlop.x -= 20
        
    }
    this.sauter = function()
@@ -42,9 +42,9 @@ function PersonnagePrincipal(dessin)
        while(i != 10)
        {
         if(i < 5)
-            {this.animationBlop.y += 4;}
+            {this.animationBlop.y += 30;}
         else
-        {this.animationBlop.y -= 4;}
+        {this.animationBlop.y -= 30;}
         i++;   
        }
 
