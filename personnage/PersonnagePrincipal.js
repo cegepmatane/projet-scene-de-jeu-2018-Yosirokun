@@ -20,11 +20,17 @@ function PersonnagePrincipal(scene)
         var spriteBlop = new createjs.SpriteSheet(
             {
                 images:[blop],
-                frames:{width:120,height:119, count:6},
+                frames:{width:120,height:119 },
                 framerate: 1,
                 animations:
             {
-                idle:[0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+                idle:
+                {
+                    frames: [0,1,2]
+                },
+                jump:{
+                    frames: ["idle",3,4,5]
+                }
             }
                 
                     
@@ -42,7 +48,7 @@ function PersonnagePrincipal(scene)
 
     this.afficher = function()
     {
-        scene.addChild(animationIdle);
+        scene.addChild(animationSaute);
     }
     this.deplacer = function(deplacement)
     {
