@@ -18,7 +18,7 @@
    createjs.Ticker.setFPS(15);
     function rafraichirJeu(evenement)
     {
-        scene.update();
+        scene.update(evenement);
     }
     
  
@@ -29,9 +29,10 @@
         {
             images:[imagePowerVie],
             frames:{width:32,height:29},
+            framerate: 1,
             animations:
             {
-                ilumine:[1,2,3,4,5,6,]
+                ilumine:[1,2,3,4,5,]
             }
         }
     );
