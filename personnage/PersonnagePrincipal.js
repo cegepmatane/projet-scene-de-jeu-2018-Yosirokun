@@ -4,6 +4,9 @@ function PersonnagePrincipal(scene)
     var blop = new Image();
     this.estCharge = false;
     var animationBlop;
+    var animationActuel;
+    var xActuel;
+    var yActuel;
     var Etat = {
         enDeplacementDroit:"EN DEPLACEMENT DROIT",
         enDeplacementgauche:"EN DEPLACEMENT GAUCHE",
@@ -21,15 +24,18 @@ function PersonnagePrincipal(scene)
             {
                 images:[blop],
                 frames:{width:120,height:119 },
-                framerate: 1,
+                framerate: 8,
                 animations:
             {
                 idle:
                 {
-                    frames: [0,1,2]
+                    frames: [0,1]
                 },
                 jump:{
                     frames: ["idle",3,4,5]
+                },
+                move:{
+                    frames:[0,1,2]
                 }
             }
                 
@@ -40,25 +46,39 @@ function PersonnagePrincipal(scene)
 
         animationIdle = new createjs.Sprite(spriteBlop, "idle");
         animationSaute = new createjs.Sprite(spriteBlop, "saute");
+        animationMove = new createjs.Sprite(spriteBlop, "move");
         personnagePrincipal.estCharge = true;   
         etatCourant = Etat.enAttente;
+        animationActuel = animationIdle;
     }
 
 
 
     this.afficher = function()
     {
-        scene.addChild(animationSaute);
+        scene.addChild(animationActuel);
+    }
+    function changerAnimation(animation)
+    {
+        xActuel = animationActuel.x;
+        yActuel = animationActuel.y;
+        scene.removeChild(animationActuel);
+        animationActuel = animation;
+        animationActuel.x = xActuel;
+        animationActuel.y = yActuel;
+        scene.addChild(animationActuel);
+        
+        
     }
     this.deplacer = function(deplacement)
     {
         switch(etatCourant){
             case Etat.enDeplacementDroit:
-                animationIdle.x += deplacement;
+                animationActuel.x += deplacement;
                 break;
 
             case Etat.enDeplacementgauche:
-                animationBlop.x -= deplacement;
+                animationActuel.x -= deplacement;
                 break;
             case Etat.enAttente:
                 break;
@@ -73,29 +93,22 @@ function PersonnagePrincipal(scene)
 
     this.deplacerDroite = function()
     {
-        etatCourant = Etat.enDeplacementDroit;            
+        etatCourant = Etat.enDeplacementDroit;
+        changerAnimation(animationMove);
     }
     this.deplacerGauche = function()
     {
         etatCourant = Etat.enDeplacementgauche;
+        changerAnimation(animationMove);
     }
     this.metreEnAttente = function()
     {
         etatCourant = Etat.enAttente;
+        changerAnimation(animationIdle);
     }
     this.sauter = function()
     {
-        var i = 0;
-        while(i != 10)
-        {
-            if(i < 5)
-            {this.animationBlop.y += 30;}
-            else
-            {this.animationBlop.y -= 30;}
-            i++;   
-        }
-
-
+       etatCourant = Etat.enSautHaut
     }
     this.gobber = function()
     {
