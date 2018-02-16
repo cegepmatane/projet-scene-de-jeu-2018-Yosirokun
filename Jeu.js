@@ -1,16 +1,41 @@
 (function()
  {
     var dessin = document.getElementById("dessin");
-
-
+    var deplacementActuel
+    var background = new Image();
+    background.src = "terrain/background.png";
+    var tiles = new Array();
 
     //var ennemi = new Ennemi(dessin);  
-    var scene = new createjs.Stage(dessin);   
-    
+    var scene = new createjs.Stage(dessin);
+    background.onload = gererChargementBackground;
+
+    function gererChargementBackground(event)
+    {
+        var image = event.target;
+        var bitmap = new createjs.Bitmap(image);
+       // scene.addChild(bitmap);
+
+
+    }
+    var tile = new Plateforme(scene);
+   var interval = setInterval(
+        function() {
+            console.log(tile.estCharge());
+            if(tile.estCharge()){
+                tile.afficher();
+                
+                
+            }
+        },20);
+
+
+
+
     createjs.Ticker.setFPS(30);
     function rafraichirJeu(evenement)
     {
-        var deplacementActuel = evenement.delta / 1000 * 200; 
+        deplacementActuel = evenement.delta / 1000 * 200; 
         hero.deplacer(deplacementActuel);
         scene.update(evenement);
     }    
@@ -23,7 +48,7 @@
                 createjs.Ticker.addEventListener("tick", rafraichirJeu);            
             }
         });
-    
+
 
     var TOUCHE_GAUCHE = 37; 
     var TOUCHE_DROITE = 39;
@@ -45,7 +70,7 @@
                 break;
             case TOUCHE_ESPACE:
 
-                hero.sauter();
+                hero.sauter(deplacementActuel);
                 break;
             case TOUCHE_CONTROLE:
 
@@ -53,10 +78,10 @@
                 break;
         }
 
-           
+
     }
-    
-     function gererToucheRelachee(evenement)
+
+    function gererToucheRelachee(evenement)
     {
 
         switch(evenement.keyCode)
@@ -70,7 +95,6 @@
                 hero.metreEnAttente();
                 break;
             case TOUCHE_ESPACE:
-
                 hero.metreEnAttente();
                 break;
             case TOUCHE_CONTROLE:
@@ -79,14 +103,14 @@
                 break;
         }
 
-           
+
     }
-    
-    
+
+
 
     this.document.onkeydown = gererToucheEnfoncee;
     this.document.onkeyup = gererToucheRelachee;
-    
+
 
 
 })();

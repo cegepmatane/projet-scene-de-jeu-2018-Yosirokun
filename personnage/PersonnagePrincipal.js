@@ -1,3 +1,12 @@
+/*
+To DO
+
+funtion sauter() qui va utiliser le ticker pour la duree du saut;
+
+
+*/
+
+
 function PersonnagePrincipal(scene)
 {
     var personnagePrincipal = this;    
@@ -12,7 +21,8 @@ function PersonnagePrincipal(scene)
         enDeplacementgauche:"EN DEPLACEMENT GAUCHE",
         enSautHaut:"EN SAUT HAUT",
         enSautBas:"EN SAUT BAS",
-        enAttente:"EN ATTENTE"
+        enAttente:"EN ATTENTE",
+        enGobe:"EN TRAIN DE GOBBER"
     }
     var etatCourant;
     blop.onload = terminerChargement;
@@ -26,21 +36,21 @@ function PersonnagePrincipal(scene)
                 frames:{width:120,height:119 },
                 framerate: 8,
                 animations:
-            {
-                idle:
                 {
-                    frames: [0,1]
-                },
-                jump:{
-                    frames: ["idle",3,4,5]
-                },
-                move:{
-                    frames:[0,1,2]
+                    idle:
+                    {
+                        frames: [0,1]
+                    },
+                    jump:{
+                        frames: ["idle",3,4,5]
+                    },
+                    move:{
+                        frames:[0,1,2]
+                    }
                 }
-            }
-                
-                    
-                
+
+
+
             }
         );
 
@@ -67,8 +77,8 @@ function PersonnagePrincipal(scene)
         animationActuel.x = xActuel;
         animationActuel.y = yActuel;
         scene.addChild(animationActuel);
-        
-        
+
+
     }
     this.deplacer = function(deplacement)
     {
@@ -81,6 +91,18 @@ function PersonnagePrincipal(scene)
                 animationActuel.x -= deplacement;
                 break;
             case Etat.enAttente:
+                break;
+            case Etat.enSautHaut:
+                animationActuel.y += deplacement;
+                break;
+            case Etat.enSautBas:
+                animationActuel.y -= deplacement;
+                break;
+            case Etat.enGobe:
+                animationActuel.scaleX += 0.2;
+                animationActuel.scaleY += 0.2;
+                animationActuel.x += 0.2;
+                animationActuel.y += 0.2;
                 break;
         }
 
@@ -108,11 +130,16 @@ function PersonnagePrincipal(scene)
     }
     this.sauter = function()
     {
-       etatCourant = Etat.enSautHaut
+        changerAnimation(animationSaute);
+       etatCourant = Etat.enSautHaut;
+
     }
     this.gobber = function()
     {
-
+        etatCourant = Etat.enGobe;
+    
+        
+        
     }
 
 
