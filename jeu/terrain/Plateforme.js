@@ -10,7 +10,7 @@ function Plateforme(scene)
 
     function initialiser()
     {
-        texture.src = "terrain/tiles/ground0.png";
+        texture.src = "jeu/terrain/tiles/ground0.png";
         texture.onload = gererChargementTile; 
     }
 

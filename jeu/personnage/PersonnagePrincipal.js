@@ -27,7 +27,7 @@ function PersonnagePrincipal(scene)
     var estGrounded = false;
     var etatCourant;
     blop.onload = terminerChargement;
-    blop.src = "personnage/blop.png";
+    blop.src = "jeu/personnage/blop.png";
 
     function terminerChargement()
     {
@@ -97,6 +97,8 @@ function PersonnagePrincipal(scene)
                 animationActuel.x -= deplacement;
                 break;
             case Etat.enAttente:
+                if(!estGrounded && animationActuel.y > 531)
+                    animationActuel.y += deplacement;   
                 break;
             case Etat.enSautHaut:
                 animationActuel.y -= deplacement + 5;
@@ -123,35 +125,35 @@ function PersonnagePrincipal(scene)
 
     this.deplacerDroite = function()
     {
-        if(estGrounded)
-        {
+        
+        
             etatCourant = Etat.enDeplacementDroit;
             changerAnimation(animationMove);
-        }
+        
     }
     this.deplacerGauche = function()
     {   
-        if(estGrounded)
-        {
+        
+        
             etatCourant = Etat.enDeplacementgauche;
             changerAnimation(animationMove);
-        }
+        
     }
     this.metreEnAttente = function()
     {
-        if(estGrounded)
-        {
+        
+        
             etatCourant = Etat.enAttente;
             changerAnimation(animationIdle);
-        }
+        
     }
     this.sauter = function()
     {   if(estGrounded)
-        {
+    {
         changerAnimation(animationSaute);
         etatCourant = Etat.enSautHaut;
         setTimeout(mettreEnChute, 500);
-        }
+    }
     }
     this.gobber = function()
     {

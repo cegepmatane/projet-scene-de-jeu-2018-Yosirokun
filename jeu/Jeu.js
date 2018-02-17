@@ -4,7 +4,7 @@
     var deplacementActuel
     var tileEnCollision = 0;
     var background = new Image();
-    background.src = "terrain/background.png";
+    background.src = "jeu/terrain/background.png";
     var tiles = new Array();
     var level = [
         0,0,0,0,0,0,0,0,0,0,
@@ -14,6 +14,7 @@
         0,0,0,0,0,1,0,1,0,0,
         1,1,1,1,1,1,1,1,1,1
     ];
+ 
 
     //var ennemi = new Ennemi(dessin);  
     var scene = new createjs.Stage(dessin);
