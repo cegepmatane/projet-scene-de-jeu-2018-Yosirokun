@@ -1,16 +1,16 @@
 function Plateforme(scene)
 {
-
+    
     var texture = new Image();
     var charge = false;
     var tilebitmap;
+    this.x = 0;
+    this.y = 0;
 
-
-    var indice = Math.floor((Math.random() * 9));
 
     function initialiser()
     {
-        texture.src = "terrain/tiles/ground" + indice + ".png";
+        texture.src = "terrain/tiles/ground0.png";
         texture.onload = gererChargementTile; 
     }
 
@@ -23,6 +23,8 @@ function Plateforme(scene)
         tilebitmap = new createjs.Bitmap(image); 
         charge = true;
 
+
+
     }
 
     this.estCharge = function()
@@ -32,11 +34,30 @@ function Plateforme(scene)
 
     this.afficher = function()
     {
+
         scene.addChild(tilebitmap);
 
+
     }
-    console.log(this.plateforme);
+    this.setPosition = function()
+    {
+        tilebitmap.x = this.x;
+        tilebitmap.y = this.y;
+       
+    }
 
+
+    this.getRepresentation = function()
+    {
+        return modifierRectangle(tilebitmap.getBounds());
+    }
+
+    function modifierRectangle(rectangle)
+    {
+        rectangle.x = tilebitmap.x;
+        rectangle.y = tilebitmap.y;
+        return rectangle;
+    }
     initialiser();
-
+    
 }

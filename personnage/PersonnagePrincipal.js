@@ -24,6 +24,7 @@ function PersonnagePrincipal(scene)
         enAttente:"EN ATTENTE",
         enGobe:"EN TRAIN DE GOBBER"
     }
+    var estGrounded = false;
     var etatCourant;
     blop.onload = terminerChargement;
     blop.src = "personnage/blop.png";
@@ -60,13 +61,18 @@ function PersonnagePrincipal(scene)
         personnagePrincipal.estCharge = true;   
         etatCourant = Etat.enAttente;
         animationActuel = animationIdle;
+        animationActuel.x = 0;
+        animationActuel.y = 531;
+
     }
 
 
 
     this.afficher = function()
     {
+
         scene.addChild(animationActuel);
+
     }
     function changerAnimation(animation)
     {
@@ -93,10 +99,10 @@ function PersonnagePrincipal(scene)
             case Etat.enAttente:
                 break;
             case Etat.enSautHaut:
-                animationActuel.y += deplacement;
+                animationActuel.y -= deplacement;
                 break;
             case Etat.enSautBas:
-                animationActuel.y -= deplacement;
+                animationActuel.y += deplacement;
                 break;
             case Etat.enGobe:
                 animationActuel.scaleX += 0.2;
@@ -131,16 +137,43 @@ function PersonnagePrincipal(scene)
     this.sauter = function()
     {
         changerAnimation(animationSaute);
-       etatCourant = Etat.enSautHaut;
-
+        etatCourant = Etat.enSautHaut;
+        setTimeout(mettreEnChute, 500);
     }
     this.gobber = function()
     {
-        etatCourant = Etat.enGobe;
-    
-        
-        
+        etatCourant = Etat.enGobe; 
     }
 
+    this.getRepresantation = function()
+    {
+
+        return modifierBound(animationActuel.getBounds());
+
+    }
+    function modifierBound(rectangle)
+    {
+        rectangle.x = animationActuel.x;
+        rectangle.y = animationActuel.y;
+
+        return rectangle;
+
+    }
+
+    function mettreEnChute()
+    {
+
+        etatCourant = Etat.enSautBas;
+
+    }
+
+    this.setGrounded = function(etat)
+    {
+        estGrounded = etat;
+    }
+    this.arretChute = function(){
+    if(estGrounded && etatCourant == Etat.enSautBas)
+        etatCourant = Etat.enAttente
+    }
 
 }
