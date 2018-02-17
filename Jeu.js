@@ -2,7 +2,7 @@
  {
     var dessin = document.getElementById("dessin");
     var deplacementActuel
-
+    var tileEnCollision = 0;
     var background = new Image();
     background.src = "terrain/background.png";
     var tiles = new Array();
@@ -11,7 +11,7 @@
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,1,0,1,0,0,
         1,1,1,1,1,1,1,1,1,1
     ];
 
@@ -37,23 +37,31 @@
         deplacementActuel = evenement.delta / 1000 * 200; 
         hero.deplacer(deplacementActuel);
         hero.arretChute();
-        for(var i = 0; i < tiles.length; i++)
-        {
 
+        for(i = 0; i != tiles.length; i++)
+        {
             if(hero.getRepresantation().intersects(tiles[i].getRepresentation()))
             {
-                hero.setGrounded(true);
-            }
-            else
-            {
-                hero.setGrounded(false);
+                tileEnCollision++;
             }
         }
+        if(tileEnCollision > 0)
+        {
+            hero.setGrounded(true);
+        }
+        else
+        {
+            hero.setGrounded(false);
+        }
+        tileEnCollision = 0;
+        
+
+
 
         scene.update(evenement);
-        console.log(hero.getRepresantation());
-        console.log(tiles[0].getRepresentation());
-
+        console.log("Hero " + hero.getRepresantation());
+        console.log("tiles" + tiles[0].getRepresentation());
+        console.log(hero.getGrounded());
     }    
 
     var hero = new PersonnagePrincipal(scene);  

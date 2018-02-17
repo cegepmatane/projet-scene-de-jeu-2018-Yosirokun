@@ -99,10 +99,12 @@ function PersonnagePrincipal(scene)
             case Etat.enAttente:
                 break;
             case Etat.enSautHaut:
-                animationActuel.y -= deplacement;
+                animationActuel.y -= deplacement + 5;
                 break;
             case Etat.enSautBas:
                 animationActuel.y += deplacement;
+                if(estGrounded)
+                {changerAnimation(animationIdle);}
                 break;
             case Etat.enGobe:
                 animationActuel.scaleX += 0.2;
@@ -121,24 +123,35 @@ function PersonnagePrincipal(scene)
 
     this.deplacerDroite = function()
     {
-        etatCourant = Etat.enDeplacementDroit;
-        changerAnimation(animationMove);
+        if(estGrounded)
+        {
+            etatCourant = Etat.enDeplacementDroit;
+            changerAnimation(animationMove);
+        }
     }
     this.deplacerGauche = function()
-    {
-        etatCourant = Etat.enDeplacementgauche;
-        changerAnimation(animationMove);
+    {   
+        if(estGrounded)
+        {
+            etatCourant = Etat.enDeplacementgauche;
+            changerAnimation(animationMove);
+        }
     }
     this.metreEnAttente = function()
     {
-        etatCourant = Etat.enAttente;
-        changerAnimation(animationIdle);
+        if(estGrounded)
+        {
+            etatCourant = Etat.enAttente;
+            changerAnimation(animationIdle);
+        }
     }
     this.sauter = function()
-    {
+    {   if(estGrounded)
+        {
         changerAnimation(animationSaute);
         etatCourant = Etat.enSautHaut;
         setTimeout(mettreEnChute, 500);
+        }
     }
     this.gobber = function()
     {
@@ -166,14 +179,17 @@ function PersonnagePrincipal(scene)
         etatCourant = Etat.enSautBas;
 
     }
-
+    this.getGrounded = function()
+    {
+        return estGrounded;
+    }
     this.setGrounded = function(etat)
     {
         estGrounded = etat;
     }
     this.arretChute = function(){
-    if(estGrounded && etatCourant == Etat.enSautBas)
-        etatCourant = Etat.enAttente
-    }
+        if(estGrounded && etatCourant == Etat.enSautBas)
+            etatCourant = Etat.enAttente
+            }
 
 }
