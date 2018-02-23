@@ -62,7 +62,7 @@ function PersonnagePrincipal(scene)
         etatCourant = Etat.enAttente;
         animationActuel = animationIdle;
         animationActuel.x = 0;
-        animationActuel.y = 531;
+        animationActuel.y = 300;
 
     }
 
@@ -109,10 +109,6 @@ function PersonnagePrincipal(scene)
                 {changerAnimation(animationIdle);}
                 break;
             case Etat.enGobe:
-                animationActuel.scaleX += 0.2;
-                animationActuel.scaleY += 0.2;
-                animationActuel.x += 0.2;
-                animationActuel.y += 0.2;
                 break;
         }
 
@@ -125,27 +121,27 @@ function PersonnagePrincipal(scene)
 
     this.deplacerDroite = function()
     {
-        
-        
-            etatCourant = Etat.enDeplacementDroit;
-            changerAnimation(animationMove);
-        
+
+
+        etatCourant = Etat.enDeplacementDroit;
+        changerAnimation(animationMove);
+
     }
     this.deplacerGauche = function()
     {   
-        
-        
-            etatCourant = Etat.enDeplacementgauche;
-            changerAnimation(animationMove);
-        
+
+
+        etatCourant = Etat.enDeplacementgauche;
+        changerAnimation(animationMove);
+
     }
     this.metreEnAttente = function()
     {
-        
-        
-            etatCourant = Etat.enAttente;
-            changerAnimation(animationIdle);
-        
+
+
+        etatCourant = Etat.enAttente;
+        changerAnimation(animationIdle);
+
     }
     this.sauter = function()
     {   if(estGrounded)
@@ -189,9 +185,20 @@ function PersonnagePrincipal(scene)
     {
         estGrounded = etat;
     }
-    this.arretChute = function(){
-        if(estGrounded && etatCourant == Etat.enSautBas)
-            etatCourant = Etat.enAttente
-            }
+
+    this.gobe = function()
+    {
+        if(etatCourant == Etat.enGobe)
+            return true;
+        else
+            return false;
+    }
+
+    this.Chute = function(){
+        if(!estGrounded && etatCourant != Etat.enSautHaut)
+            etatCourant = Etat.enSautBas;
+        else if(estGrounded && etatCourant != Etat.enSautHaut)
+            etatCourant = Etat.enAttente;
+    }
 
 }

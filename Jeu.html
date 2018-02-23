@@ -6,18 +6,68 @@
 <body>
     
     
-    
+      <script type="text/plain" id="page-accueil">
+      
+    <header>
+        <h1>Bloper</h1>
+        <h2>Blop adventure</h2>
+    </header>
 
-    
+    <section id="section-accueil">
+        <p>Veuillez inscrire votre nom puis cliquer sur jouer !</p>
+        <!-- En utilisant post on ne touche pas à l'URL-->
+        <form id="form-accueil" method="post">
+            <div>
+                <label for="nom">Votre nom de joueur</label>
+                <input type="text" id="nom" name="nom" >
+            </div>
+
+            <!-- La navigation se fait par l'ajout de #jeu à l'URL
+                 Il n'y a pas de rechargement de la page car c'est une technique de navigation
+                 HTML dans une même page. -->
+            <a id="bouton-jouer" href="#jeu">Jouer</a>
+        </form>
+    </section>
+
+  </script>
+
+  <script type="text/plain" id="page-jeu">
     <span id="nom-joueur"></span>
+    <!-- Notre canvas existe seulement quand cette vue est dans le DOM -->
     <canvas id="dessin" width="1280" height="768"></canvas>
+    <div class="menu">
+      <a href="#accueil">Accueil</a>
+      <a href="#perdu">perdu</a>
+    </div>
+  </script>
+ <script type="text/plain" id="page-perdu">
+        <header>
+        <h1>Vous avez perdu!</h1>
+            </header>
+        <a href="jeu.html">Rejouer</a>
+        </script>
+        
+         <script type="text/plain" id="page-gagner">
+        <header>
+        <h1>Vous avez gagné!</h1>
+            </header>
+        <a href="jeu.html">Rejouer</a>
+        </script>
+    
+    
+    
     <script src="jeu/terrain/Plateforme.js"></script>
     <script type="text/javascript" src="jeu/personnage/easeljs.min.js"></script>
     <script src="jeu/personnage/Ennemi.js"></script>
+    <script src="modele/Joueur.js"></script>
+    <script src="vue/AccueilVue.js"></script>
+    <script src="vue/JeuVue.js"></script>
     <script src="jeu/personnage/PersonnagePrincipal.js"></script>
+    <script src="vue/GagnerVue.js"></script>
+    <script src="vue/PerduVue.js"></script>
     <script src="jeu/Jeu.js" ></script>
     
-    <a href="Blober.html">Revenir au menu</a>
+   
     
 </body>
     
