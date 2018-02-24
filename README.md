@@ -1,2 +1,2 @@
 # projet-readme
-Projet pour initialiser les dépôts de Classroom
+Lien de la video: https://youtu.be/xaCpcW44FxE
