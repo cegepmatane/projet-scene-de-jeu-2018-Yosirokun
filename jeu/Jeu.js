@@ -1,6 +1,8 @@
 (function()
  {
+   
     var jeu = this;
+    var serveur;
     function initialiser()
     {
         window.addEventListener("hashchange", interpreterEvenementsLocation);
@@ -10,10 +12,12 @@
         accueilVue.afficher();
         perduVue = new PerduVue();
         gagnervue = new GagnerVue();
+        serveur = new Controleur();
+      
 
 
     }
-
+    
 
     function interpreterEvenementsLocation(evenement)
     {
@@ -102,7 +106,7 @@
             else if(hero.getRepresantation().intersects(ennemi.getRepresantation()) && hero.gobe())
                 window.location.hash = '#gagner';
 
-                    scene.update(evenement);
+            scene.update(evenement);
 
         }    
 
@@ -231,7 +235,7 @@
         }
 
         creerNiveau();
-        console.log (tiles);
+        
     }
     initialiser();
 
