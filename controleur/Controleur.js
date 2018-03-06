@@ -4,9 +4,20 @@ var serveur;
 var configuration = {};
 configuration.host = "127.0.0.1";
 configuration.port = 8888;
-configuration.zone = "zone-de-test";
+configuration.zone = "Bloper";
 configuration.debug = false;
-configuration.room = 'room';
+configuration.room = 'caverne';
+var connected = false;
+var xJ1;
+var yJ1;    
+var xJ2;
+var yJ2;    
+var nomJ1;
+var nomJ2;
+var vieJ1;
+var vieJ2;
+var points;
+var nombreJoueurActif;    
 
 
 function initialiser()
@@ -31,8 +42,14 @@ function executerApresOuvertureContactServeur(e)
 {
     tracer("executerApresOuvrirContactServeur()");
     tracer("succes de la connection " + e.success);
+    connected = true;
+    
     
 }
+    this.getEtatConnection = function()
+    {
+        return connected
+    }
 
 this.ouvrirSession = function(nom)
 {
@@ -58,15 +75,14 @@ function executerApresEntreeSalon(e)
 {
     tracer('executerApresEntreeSalon()');
     tracer('Entree dans le salon ' + e.room + ' reussie')
-    envoyerSalutation();
 }
 
-function envoyerSalutation()
+this.setVariable = function(variable, valeur)
 {
-    tracer('envoyerSalutation()');
+  
     var listeVariables = [];
     //listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('test','autre valeur'));
-    listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('salutation','coucou'));
+    listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable(variable, valeur));
 
     estEnvoyee = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listeVariables));
     tracer('la nouvelle valeur est envoyee ' + estEnvoyee);
@@ -74,8 +90,7 @@ function envoyerSalutation()
 
 function executerApresVariableDeSalon(e)
 {
-    tracer('executerApresVariableDeSalon()');
-    tracer('variables recues ' + e.changedVars);
+    
     if(e.changedVars.indexOf('salutation') != -1)
     {
         tracer('salutation == ' + e.room.getVariable('salutation').value, true);

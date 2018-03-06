@@ -1,8 +1,9 @@
 (function()
  {
-   
+
     var jeu = this;
     var serveur;
+    var nomJoueur;
     function initialiser()
     {
         window.addEventListener("hashchange", interpreterEvenementsLocation);
@@ -13,11 +14,13 @@
         perduVue = new PerduVue();
         gagnervue = new GagnerVue();
         serveur = new Controleur();
-      
+
+
+
 
 
     }
-    
+
 
     function interpreterEvenementsLocation(evenement)
     {
@@ -29,6 +32,8 @@
         }
         else if(intructionNavigation.match(/^#jeu$/))
         {
+            nomJoueur = document.getElementById("nom").value;
+            ouvrirSession();
             jeuVue.afficher();
         }
         else if(intructionNavigation.match(/^#perdu$/))
@@ -40,6 +45,10 @@
             gagnerVue.afficher();
         }
 
+    }
+    function ouvrirSession()
+    {
+        serveur.ouvrirSession(nomJoueur);
     }
 
     this.lancerJeu = function()
@@ -58,6 +67,9 @@
             0,0,0,0,0,0,0,1,0,0,
             1,1,1,1,1,1,1,1,1,1
         ];
+
+        
+
 
 
         //var ennemi = new Ennemi(dessin);  
@@ -155,6 +167,7 @@
 
         }
 
+
         function gererToucheRelachee(evenement)
         {
 
@@ -235,7 +248,7 @@
         }
 
         creerNiveau();
-        
+
     }
     initialiser();
 
