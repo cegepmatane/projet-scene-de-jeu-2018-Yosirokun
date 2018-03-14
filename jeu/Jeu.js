@@ -3,7 +3,11 @@
 
     var jeu = this;
     var serveur;
-    var nomJoueur;
+    var nomJoueur1;
+    var nomJoueur2;
+    var points = 0;
+    var mode = "";
+    var numeroJoueur = 0;
     function initialiser()
     {
         window.addEventListener("hashchange", interpreterEvenementsLocation);
@@ -13,12 +17,20 @@
         accueilVue.afficher();
         perduVue = new PerduVue();
         gagnervue = new GagnerVue();
-        serveur = new Controleur();
+        attenteVue = new AttenteVue();
 
 
 
 
 
+
+
+    }
+    this.metreAJourVariable = function ()
+    {
+        nomJoueur1 = serveur.getNomJ1();
+        nomJoueur2 = serveur.getNomJ2();
+        points = serveur.getpoints();
     }
 
 
@@ -32,9 +44,41 @@
         }
         else if(intructionNavigation.match(/^#jeu$/))
         {
+            mode = "solo";
+            nomJoueur = document.getElementById("nom").value;
+            jeuVue.afficher();
+        }
+        else if(intructionNavigation.match(/^#jeu2$/))
+        {
+            console.log("entre dans le if de jeu2");
+            attenteVue.afficher();
+            connecterAuServeur();
+            while(serveur.getEtatConnection() == false)
+            {console.log("Connection en cour ...");}
             nomJoueur = document.getElementById("nom").value;
             ouvrirSession();
-            jeuVue.afficher();
+            mode = "coop";
+
+
+            if(serveur.getJoueurActif() == 0)
+            {
+                numeroJoueur = 1;
+                nomJoueur1 = nomJoueur;
+            }
+            else
+            {
+                numeroJoueur = 2
+                nomJoueur2 = nomJoueur;
+            }
+            var joueurActif = serveur.getJoueurActif() + 1;
+            serveur.setVariable('nombreJoueurActif', joueurActif);
+            while(serveur.getJoueurActif() != 2)
+            {
+                if (serveur.getJoueurActif() == 2)
+                {
+                    jeuVue.afficher();
+                }
+            }
         }
         else if(intructionNavigation.match(/^#perdu$/))
         {
@@ -46,6 +90,11 @@
         }
 
     }
+    function connecterAuServeur()
+    {
+        serveur = new Controleur(jeu);
+    }
+
     function ouvrirSession()
     {
         serveur.ouvrirSession(nomJoueur);
@@ -133,7 +182,6 @@
 
                 }
             });
-
 
 
         var TOUCHE_GAUCHE = 37; 

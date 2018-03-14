@@ -1,4 +1,4 @@
-function Controleur()
+function Controleur(jeu)
 {
 var serveur;
 var configuration = {};
@@ -8,10 +8,12 @@ configuration.zone = "Bloper";
 configuration.debug = false;
 configuration.room = 'caverne';
 var connected = false;
+var etatJ1;
+var etatJ2;
 var xJ1;
-var yJ1;    
 var xJ2;
-var yJ2;    
+var yJ1;
+var yJ2;
 var nomJ1;
 var nomJ2;
 var vieJ1;
@@ -34,7 +36,9 @@ function initialiser()
 }
     function ouvrirContactServeur()
 {
-    serveur.connect();    
+    console.log("se connecte");
+    serveur.connect();
+
 }
 
 
@@ -87,14 +91,59 @@ this.setVariable = function(variable, valeur)
     estEnvoyee = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listeVariables));
     tracer('la nouvelle valeur est envoyee ' + estEnvoyee);
 }
+function actualiserVariable()
+{
+    if(e.changedVars.indexOf('nomJ1') != -1)
+    {
+        nomJ1 = e.room.getVariable('nomJ1').value;
+    }
+    else if(e.changedVars.indexOf('nomJ2') != -1)
+    {
+        nomJ2 = e.room.getVariable('nomJ2').value;
+    }
+    else if(e.changedVars.indexOf('vieJ1') != -1)
+    {
+        vieJ1 = e.room.getVariable('vieJ1').value;
+    }
+    else if(e.changedVars.indexOf('vieJ2') != -1)
+    {
+        vieJ2 = e.room.getVariable('vieJ2').value;
+    }
+    else if(e.changedVars.indexOf('points') != -1)
+    {
+        points = e.room.getVariable('points').value;
+    }
+    else if(e.changedVars.indexOf('nomJ1') != -1)
+    {
+        nomJ1 = e.room.getVariable('nomJ1').value;
+    }
+    else if(e.changedVars.indexOf('nombreJoueurActif') != -1)
+    {
+        nombreJoueurActif = e.room.getVariable('nombreJoueurActif').value;
+    }
+    else if(e.changedVars.indexOf('xJ1') != -1)
+    {
+        xJ1 = e.room.getVariable('xJ1').value;
+    }
+    else if(e.changedVars.indexOf('yJ1') != -1)
+    {
+        yJ1 = e.room.getVariable('yJ1').value;
+    }
+    else if(e.changedVars.indexOf('xJ2') != -1)
+    {
+        xJ2 = e.room.getVariable('xJ2').value;
+    }
+    else if(e.changedVars.indexOf('yJ2') != -1)
+    {
+        yJ2 = e.room.getVariable('yJ2').value;
+    }
+}
+
 
 function executerApresVariableDeSalon(e)
 {
-    
-    if(e.changedVars.indexOf('salutation') != -1)
-    {
-        tracer('salutation == ' + e.room.getVariable('salutation').value, true);
-    }
+    actualiserVariable
+    jeu.metreAJourVariable();
 
 }
 
@@ -103,5 +152,32 @@ function tracer(message, alerte)
     console.log(message);
     if(alerte) alert(message);
 }
+this.getNomJ1 = function ()
+{
+    return nomJ1;
+}
+this.getNomJ2 = function ()
+{
+    return nomJ2;
+}
+    this.getVieJ1 = function ()
+    {
+        return vieJ1;
+    }
+    this.getVieJ2 = function ()
+    {
+        return vieJ2;
+    }
+    this.getPoints = function ()
+    {
+        return points;
+    }
+    this.getJoueurActif = function()
+    {
+        return nombreJoueurActif;
+    }
+
+
+
 initialiser();
 }

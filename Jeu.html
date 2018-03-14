@@ -25,7 +25,8 @@
             <!-- La navigation se fait par l'ajout de #jeu à l'URL
                  Il n'y a pas de rechargement de la page car c'est une technique de navigation
                  HTML dans une même page. -->
-            <a id="bouton-jouer" href="#jeu">Jouer</a>
+            <a id="bouton-jouer-solo" href="#jeu">Jouer en solo</a>
+            <a id="bouton-jouer-coop" href="#jeu2">Jouer en coop</a>
         </form>
     </section>
 
@@ -53,6 +54,12 @@
             </header>
         <a href="jeu.html">Rejouer</a>
         </script>
+
+      <script type="text/plain" id="page-attente-joueur">
+        <header>
+        <h1>En attente d'un autre joueur</h1>
+        </header>
+        </script>
     
     
     
@@ -65,6 +72,7 @@
     <script src="jeu/personnage/PersonnagePrincipal.js"></script>
     <script src="vue/GagnerVue.js"></script>
     <script src="vue/PerduVue.js"></script>
+      <script src="vue/AttenteVue.js"></script>
     <script src="controleur/lib/jquery-1.7.2.min.js"></script>
     <script src="controleur/lib/SFS2X_API_JS.js"></script>
     <script src="controleur/Controleur.js"></script>

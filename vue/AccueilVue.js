@@ -24,9 +24,11 @@ AccueilVue = function(joueur)
 										evenement.preventDefault(); 
 										return false;
 									 });
-        boutonJouer = document.getElementById("bouton-jouer");
+        boutonJouerSolo = document.getElementById("bouton-jouer-solo");
+        boutonJouerCoop = document.getElementById("bouton-jouer-coop");
         champNom = document.getElementById("nom");
-		boutonJouer.addEventListener("click", enregisterNom);
+		boutonJouerSolo.addEventListener("click", enregisterNom);
+        boutonJouerCoop.addEventListener("click", enregisterNom);
 	}
 	
 	initialiser();

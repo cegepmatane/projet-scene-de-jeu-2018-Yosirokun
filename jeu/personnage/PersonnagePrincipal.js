@@ -1,10 +1,3 @@
-/*
-To DO
-
-funtion sauter() qui va utiliser le ticker pour la duree du saut;
-
-
-*/
 
 
 function PersonnagePrincipal(scene)
@@ -13,6 +6,7 @@ function PersonnagePrincipal(scene)
     var blop = new Image();
     this.estCharge = false;
     var animationBlop;
+    var vie;
     var animationActuel;
     var xActuel;
     var yActuel;
