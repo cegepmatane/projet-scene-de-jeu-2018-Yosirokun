@@ -8,6 +8,7 @@
     var points = 0;
     var mode = "";
     var numeroJoueur = 0;
+    this.nomJoueur;
     function initialiser()
     {
         window.addEventListener("hashchange", interpreterEvenementsLocation);
@@ -30,7 +31,7 @@
     {
         nomJoueur1 = serveur.getNomJ1();
         nomJoueur2 = serveur.getNomJ2();
-        points = serveur.getpoints();
+        points = serveur.getPoints();
     }
 
 
@@ -50,35 +51,19 @@
         }
         else if(intructionNavigation.match(/^#jeu2$/))
         {
-            console.log("entre dans le if de jeu2");
-            attenteVue.afficher();
+
+            this.nomJoueur = document.getElementById("nom").value;
             connecterAuServeur();
-            while(serveur.getEtatConnection() == false)
-            {console.log("Connection en cour ...");}
-            nomJoueur = document.getElementById("nom").value;
-            ouvrirSession();
             mode = "coop";
 
-
-            if(serveur.getJoueurActif() == 0)
-            {
-                numeroJoueur = 1;
-                nomJoueur1 = nomJoueur;
-            }
-            else
-            {
-                numeroJoueur = 2
-                nomJoueur2 = nomJoueur;
-            }
-            var joueurActif = serveur.getJoueurActif() + 1;
-            serveur.setVariable('nombreJoueurActif', joueurActif);
-            while(serveur.getJoueurActif() != 2)
-            {
-                if (serveur.getJoueurActif() == 2)
+            var intervale = setInterval(function()
                 {
-                    jeuVue.afficher();
-                }
-            }
+                    if(serveur.getJoueurActif() == 2)
+                    {
+                        jeuVue.afficher();
+                        clearInterval();
+                    }
+            }, 5000);
         }
         else if(intructionNavigation.match(/^#perdu$/))
         {
@@ -89,7 +74,22 @@
             gagnerVue.afficher();
         }
 
+
     }
+     this.setNumeroJoueur = function ()
+     {
+         if(serveur.getJoueurActif() == 0)
+         {
+             numeroJoueur = 1;
+             nomJoueur1 = nomJoueur;
+         }
+         else
+         {
+             numeroJoueur = 2
+             nomJoueur2 = nomJoueur;
+         }
+
+     }
     function connecterAuServeur()
     {
         serveur = new Controleur(jeu);
@@ -98,6 +98,7 @@
     function ouvrirSession()
     {
         serveur.ouvrirSession(nomJoueur);
+        attenteVue.afficher();
     }
 
     this.lancerJeu = function()

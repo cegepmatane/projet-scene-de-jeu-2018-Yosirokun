@@ -1,5 +1,6 @@
 function Controleur(jeu)
 {
+var controleur = this;
 var serveur;
 var configuration = {};
 configuration.host = "127.0.0.1";
@@ -16,10 +17,10 @@ var yJ1;
 var yJ2;
 var nomJ1;
 var nomJ2;
-var vieJ1;
-var vieJ2;
-var points;
-var nombreJoueurActif;    
+var vieJ1 = 10;
+var vieJ2 = 10;
+var points = 0;
+var nombreJoueurActif = 0;
 
 
 function initialiser()
@@ -36,7 +37,7 @@ function initialiser()
 }
     function ouvrirContactServeur()
 {
-    console.log("se connecte");
+    console.log("se connecte...");
     serveur.connect();
 
 }
@@ -46,7 +47,9 @@ function executerApresOuvertureContactServeur(e)
 {
     tracer("executerApresOuvrirContactServeur()");
     tracer("succes de la connection " + e.success);
+    controleur.ouvrirSession(jeu.nomJoueur);
     connected = true;
+
     
     
 }
@@ -79,6 +82,9 @@ function executerApresEntreeSalon(e)
 {
     tracer('executerApresEntreeSalon()');
     tracer('Entree dans le salon ' + e.room + ' reussie')
+
+    jeu.setNumeroJoueur();
+    controleur.setVariable('nombreJoueurActif', nombreJoueurActif + 1);
 }
 
 this.setVariable = function(variable, valeur)
@@ -89,7 +95,7 @@ this.setVariable = function(variable, valeur)
     listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable(variable, valeur));
 
     estEnvoyee = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listeVariables));
-    tracer('la nouvelle valeur est envoyee ' + estEnvoyee);
+    tracer('la nouvelle valeur() est envoyee ' + estEnvoyee);
 }
 function actualiserVariable()
 {
@@ -120,6 +126,7 @@ function actualiserVariable()
     else if(e.changedVars.indexOf('nombreJoueurActif') != -1)
     {
         nombreJoueurActif = e.room.getVariable('nombreJoueurActif').value;
+        tracer("Nombre de joueur:" + nombreJoueurActif);
     }
     else if(e.changedVars.indexOf('xJ1') != -1)
     {
@@ -145,6 +152,7 @@ function executerApresVariableDeSalon(e)
     actualiserVariable
     jeu.metreAJourVariable();
 
+
 }
 
 function tracer(message, alerte)
@@ -160,22 +168,22 @@ this.getNomJ2 = function ()
 {
     return nomJ2;
 }
-    this.getVieJ1 = function ()
-    {
-        return vieJ1;
-    }
-    this.getVieJ2 = function ()
-    {
-        return vieJ2;
-    }
-    this.getPoints = function ()
-    {
-        return points;
-    }
-    this.getJoueurActif = function()
-    {
-        return nombreJoueurActif;
-    }
+this.getVieJ1 = function ()
+{
+    return vieJ1;
+}
+this.getVieJ2 = function ()
+{
+    return vieJ2;
+}
+this.getPoints = function ()
+{
+    return points;
+}
+this.getJoueurActif = function()
+{
+    return nombreJoueurActif;
+}
 
 
 
