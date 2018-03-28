@@ -55,15 +55,15 @@
             this.nomJoueur = document.getElementById("nom").value;
             connecterAuServeur();
             mode = "coop";
-
+            console.log('Mode de jeu Coop');
             var intervale = setInterval(function()
                 {
                     if(serveur.getJoueurActif() == 2)
                     {
                         jeuVue.afficher();
-                        clearInterval();
+                        clearInterval(intervale);
                     }
-            }, 5000);
+            }, 1000);
         }
         else if(intructionNavigation.match(/^#perdu$/))
         {
@@ -76,18 +76,10 @@
 
 
     }
-     this.setNumeroJoueur = function ()
+     this.setNumeroJoueur = function (numero)
      {
-         if(serveur.getJoueurActif() == 0)
-         {
-             numeroJoueur = 1;
-             nomJoueur1 = nomJoueur;
-         }
-         else
-         {
-             numeroJoueur = 2
-             nomJoueur2 = nomJoueur;
-         }
+        numeroJoueur = numero;
+        console.log(numeroJoueur);
 
      }
     function connecterAuServeur()
@@ -144,6 +136,24 @@
             deplacementActuel = evenement.delta / 1000 * 200; 
             hero.deplacer(deplacementActuel);
             hero.Chute();
+            if(mode == "coop")
+            {
+                if(numeroJoueur == 1)
+                {
+                    serveur.setVariable("xJ1", hero.getXActuel);
+                    serveur.setVariable("yJ1", hero.getYActuel);
+                    coequipier.setX = serveur.getXJ2();
+                    coequipier.setY = serveur.getYJ2();
+                }
+                else if(numeroJoueur == 2)
+                {
+                    serveur.setVariable('xJ2', hero.getXActuel);
+                    serveur.setVariable('yJ2', hero.getYActuel);
+                    coequipier.setX = serveur.getXJ1();
+                    coequipier.setY = serveur.getYJ1();
+                }
+
+            }
 
             for(i = 0; i != tiles.length; i++)
             {
@@ -172,12 +182,16 @@
 
         }    
 
-        var hero = new PersonnagePrincipal(scene);  
+        var hero = new PersonnagePrincipal(scene);
+        if(mode == "coop")
+            var coequipier = new PersonnagePrincipal(scene);
         var ennemi = new Ennemi(scene); 
         var monInterval = setInterval(
             function() {
                 if(hero.estCharge && ennemi.estCharge){
-                    hero.afficher(); 
+                    hero.afficher();
+                    if(mode == "coop")
+                        coequipier.afficher();
                     ennemi.afficher();
                     createjs.Ticker.addEventListener("tick", rafraichirJeu); 
 

@@ -31,6 +31,7 @@ function initialiser()
     serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
     serveur.addEventListener(SFS2X.SFSEvent.LOGIN, executerApresOuvertureSession, this);
     serveur.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, executerApresEntreeSalon, this);
+
     serveur.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, executerApresVariableDeSalon, this);
 
     ouvrirContactServeur();
@@ -83,8 +84,7 @@ function executerApresEntreeSalon(e)
     tracer('executerApresEntreeSalon()');
     tracer('Entree dans le salon ' + e.room + ' reussie')
 
-    jeu.setNumeroJoueur();
-    controleur.setVariable('nombreJoueurActif', nombreJoueurActif + 1);
+    tracer("le nombre de joueur est de :" + nombreJoueurActif);
 }
 
 this.setVariable = function(variable, valeur)
@@ -97,61 +97,53 @@ this.setVariable = function(variable, valeur)
     estEnvoyee = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listeVariables));
     tracer('la nouvelle valeur() est envoyee ' + estEnvoyee);
 }
-function actualiserVariable()
+function actualiserSalon(salon)
 {
-    if(e.changedVars.indexOf('nomJ1') != -1)
-    {
-        nomJ1 = e.room.getVariable('nomJ1').value;
-    }
-    else if(e.changedVars.indexOf('nomJ2') != -1)
-    {
-        nomJ2 = e.room.getVariable('nomJ2').value;
-    }
-    else if(e.changedVars.indexOf('vieJ1') != -1)
-    {
-        vieJ1 = e.room.getVariable('vieJ1').value;
-    }
-    else if(e.changedVars.indexOf('vieJ2') != -1)
-    {
-        vieJ2 = e.room.getVariable('vieJ2').value;
-    }
-    else if(e.changedVars.indexOf('points') != -1)
-    {
-        points = e.room.getVariable('points').value;
-    }
-    else if(e.changedVars.indexOf('nomJ1') != -1)
-    {
-        nomJ1 = e.room.getVariable('nomJ1').value;
-    }
-    else if(e.changedVars.indexOf('nombreJoueurActif') != -1)
-    {
-        nombreJoueurActif = e.room.getVariable('nombreJoueurActif').value;
-        tracer("Nombre de joueur:" + nombreJoueurActif);
-    }
-    else if(e.changedVars.indexOf('xJ1') != -1)
-    {
-        xJ1 = e.room.getVariable('xJ1').value;
-    }
-    else if(e.changedVars.indexOf('yJ1') != -1)
-    {
-        yJ1 = e.room.getVariable('yJ1').value;
-    }
-    else if(e.changedVars.indexOf('xJ2') != -1)
-    {
-        xJ2 = e.room.getVariable('xJ2').value;
-    }
-    else if(e.changedVars.indexOf('yJ2') != -1)
-    {
-        yJ2 = e.room.getVariable('yJ2').value;
-    }
+        nomJ1 = salon.getVariable('nomJ1').value;
+
+        nomJ2 = salon.getVariable('nomJ2').value;
+
+        vieJ1 = salon.getVariable('vieJ1').value;
+
+        vieJ2 = salon.getVariable('vieJ2').value;
+
+        points = salon.getVariable('points').value;
+
+
+        nomJ1 = salon.getVariable('nomJ1').value;
+
+
+        nombreJoueurActif = salon.getVariable('nombreJoueurActif').value;
+
+
+        xJ1 = salon.getVariable('xJ1').value;
+
+
+        yJ1 = salon.getVariable('yJ1').value;
+
+
+        xJ2 = salon.getVariable('xJ2').value;
+
+
+        yJ2 = salon.getVariable('yJ2').value;
+
 }
 
 
 function executerApresVariableDeSalon(e)
 {
-    actualiserVariable
+    actualiserSalon(e.room);
+    setNumeroJoueur();
     jeu.metreAJourVariable();
 
+}
+function setNumeroJoueur() {
+    console.log("ca rentre dans la fonction numero joueur");
+    if(nombreJoueurActif == 1)
+        jeu.setNumeroJoueur(1);
+
+    else if(nombreJoueurActif == 2)
+        jeu.setNumeroJoueur(2);
 
 }
 
@@ -183,6 +175,22 @@ this.getPoints = function ()
 this.getJoueurActif = function()
 {
     return nombreJoueurActif;
+}
+this.getXJ1 = function ()
+{
+    return xJ1;
+}
+this.getYJ1 = function ()
+{
+    return yJ1;
+}
+this.getXJ2 = function ()
+{
+    return xJ2;
+}
+this.getYJ2 = function ()
+{
+    return yJ2;
 }
 
 

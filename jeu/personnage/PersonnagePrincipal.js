@@ -109,6 +109,22 @@ function PersonnagePrincipal(scene)
 
 
     }
+    this.getXActuel = function()
+    {
+        return xActuel;
+    }
+    this.getYActuel = function ()
+    {
+        return yActuel;
+    }
+    this.setX = function (valeur)
+    {
+        animationActuel.x = valeur;
+    }
+    this.setY = function (valeur)
+    {
+        animationActuel.y = valeur;
+    }
 
 
 
