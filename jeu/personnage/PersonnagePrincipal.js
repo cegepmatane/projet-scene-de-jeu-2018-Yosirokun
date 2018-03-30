@@ -6,7 +6,7 @@ function PersonnagePrincipal(scene)
     var blop = new Image();
     this.estCharge = false;
     var animationBlop;
-    var vie;
+    var vie = 10;
     var animationActuel;
     var xActuel;
     var yActuel;
@@ -209,6 +209,12 @@ function PersonnagePrincipal(scene)
             etatCourant = Etat.enSautBas;
         else if(estGrounded && etatCourant != Etat.enSautHaut)
             etatCourant = Etat.enAttente;
+    }
+    this.getVie = function(){
+        return vie;
+    }
+    this.setVie = function(pointVie){
+        vie = pointVie;
     }
 
 }

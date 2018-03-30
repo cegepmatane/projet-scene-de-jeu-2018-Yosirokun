@@ -139,11 +139,16 @@
             }
             tileEnCollision = 0;
 
-            if (hero.getRepresantation().intersects(ennemi.getRepresantation()))
-                window.location.hash = '#perdu';
-
-            else if (hero.getRepresantation().intersects(ennemi.getRepresantation()) && hero.gobe())
-                window.location.hash = '#gagner';
+            if (hero.getRepresantation().intersects(ennemi.getRepresantation())) {
+                var vieSoustraite = hero.getVie() - 1;
+                hero.setVie(vieSoustraite);
+            }
+            if (mode == "coop") {
+                if (coequipier.getRepresantation().intersects(ennemi.getRepresantation())) {
+                    var vieSoustraite = coequipier.getVie() - 1;
+                    coequipier.setVie(vieSoustraite);
+                }
+            }
 
             scene.update(evenement);
 
