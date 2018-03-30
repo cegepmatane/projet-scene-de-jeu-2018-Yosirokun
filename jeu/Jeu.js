@@ -59,6 +59,8 @@
 
 
     }
+
+    
     this.setNumeroJoueur = function(numero) {
         numeroJoueur = numero;
         console.log('le numero du joueur Actuel est: ' + numeroJoueur);
@@ -82,13 +84,14 @@
         background.src = "jeu/terrain/background.png";
         var tiles = new Array();
         var level = [
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
             0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
             0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         ];
+
 
 
 

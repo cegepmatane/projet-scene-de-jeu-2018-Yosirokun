@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="sfs2x">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../SynchronisationVariable/sfs2x.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/sfs2x.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

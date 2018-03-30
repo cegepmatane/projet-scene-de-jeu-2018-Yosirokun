@@ -27,6 +27,5 @@ public class RoomJoinHandler extends BaseServerEventHandler {
         trace("nombre de joueur: " + nombreDejoueur);
 
         getApi().setRoomVariables(utilisateur, salon, listeVariables);
-        //salon.setVariable(variableSalon);
     }
 }

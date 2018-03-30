@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="BlopperExtension:jar">
+  <artifact type="jar" name="BlopperExtention:jar">
     <output-path>$USER_HOME$/SmartFoxServer_2X/SFS2X/extensions/BlopperExtension</output-path>
     <root id="archive" name="Blopper.jar">
       <element id="module-output" name="Blopper" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../SynchronisationVariable/sfs2x.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/sfs2x.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
