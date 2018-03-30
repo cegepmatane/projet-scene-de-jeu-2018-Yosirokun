@@ -1,5 +1,4 @@
-(function()
- {
+(function() {
 
     var jeu = this;
     var serveur;
@@ -9,12 +8,12 @@
     var mode = "";
     var numeroJoueur = 0;
     this.nomJoueur;
-    function initialiser()
-    {
+
+    function initialiser() {
         window.addEventListener("hashchange", interpreterEvenementsLocation);
         joueur = new Joueur();
-        accueilVue = new AccueilVue(joueur);	
-        jeuVue = new JeuVue(joueur, jeu);	
+        accueilVue = new AccueilVue(joueur);
+        jeuVue = new JeuVue(joueur, jeu);
         accueilVue.afficher();
         perduVue = new PerduVue();
         gagnervue = new GagnerVue();
@@ -22,95 +21,74 @@
 
 
 
-
-
-
-
     }
-    this.metreAJourVariable = function ()
-    {
+    this.metreAJourVariable = function() {
         nomJoueur1 = serveur.getNomJ1();
         nomJoueur2 = serveur.getNomJ2();
         points = serveur.getPoints();
     }
 
 
-    function interpreterEvenementsLocation(evenement)
-    {
+    function interpreterEvenementsLocation(evenement) {
         //hash est la partie suivant le # dans l'url
         var intructionNavigation = window.location.hash;
-        if(!intructionNavigation || intructionNavigation.match(/^#$/) || intructionNavigation.match(/^#accueil$/)) 
-        {
-            accueilVue.afficher();	
-        }
-        else if(intructionNavigation.match(/^#jeu$/))
-        {
+        if (!intructionNavigation || intructionNavigation.match(/^#$/) || intructionNavigation.match(/^#accueil$/)) {
+            accueilVue.afficher();
+        } else if (intructionNavigation.match(/^#jeu$/)) {
             mode = "solo";
             nomJoueur = document.getElementById("nom").value;
             jeuVue.afficher();
-        }
-        else if(intructionNavigation.match(/^#jeu2$/))
-        {
+        } else if (intructionNavigation.match(/^#jeu2$/)) {
 
             this.nomJoueur = document.getElementById("nom").value;
+            attenteVue.afficher();
             connecterAuServeur();
             mode = "coop";
             console.log('Mode de jeu Coop');
-            var intervale = setInterval(function()
-                {
-                    if(serveur.getJoueurActif() == 2)
-                    {
-                        jeuVue.afficher();
-                        clearInterval(intervale);
-                    }
+            var intervale = setInterval(function() {
+                if (serveur.getJoueurActif() == 2) {
+                    jeuVue.afficher();
+                    clearInterval(intervale);
+                }
             }, 1000);
-        }
-        else if(intructionNavigation.match(/^#perdu$/))
-        {
+        } else if (intructionNavigation.match(/^#perdu$/)) {
             perduVue.afficher();
-        }
-        else if(intructionNavigation.match(/^#gagner$/))
-        {
+        } else if (intructionNavigation.match(/^#gagner$/)) {
             gagnerVue.afficher();
         }
 
 
     }
-     this.setNumeroJoueur = function (numero)
-     {
+    this.setNumeroJoueur = function(numero) {
         numeroJoueur = numero;
-        console.log(numeroJoueur);
+        console.log('le numero du joueur Actuel est: ' + numeroJoueur);
 
-     }
-    function connecterAuServeur()
-    {
+    }
+
+    function connecterAuServeur() {
         serveur = new Controleur(jeu);
     }
 
-    function ouvrirSession()
-    {
+    function ouvrirSession() {
         serveur.ouvrirSession(nomJoueur);
         attenteVue.afficher();
     }
 
-    this.lancerJeu = function()
-    {
+    this.lancerJeu = function() {
         var dessin = document.getElementById("dessin");
-        var deplacementActuel
+        var deplacementActuel;
         var tileEnCollision = 0;
         var background = new Image();
         background.src = "jeu/terrain/background.png";
         var tiles = new Array();
         var level = [
-            0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,1,
-            0,0,0,0,0,0,0,0,1,0,
-            0,0,0,0,0,0,0,1,0,0,
-            1,1,1,1,1,1,1,1,1,1
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         ];
-
-        
 
 
 
@@ -118,8 +96,7 @@
         var scene = new createjs.Stage(dessin);
         background.onload = gererChargementBackground;
 
-        function gererChargementBackground(event)
-        {
+        function gererChargementBackground(event) {
             var image = event.target;
             var bitmap = new createjs.Bitmap(image);
             scene.addChild(bitmap);
@@ -129,24 +106,19 @@
 
 
 
-
         createjs.Ticker.setFPS(30);
-        function rafraichirJeu(evenement)
-        {
-            deplacementActuel = evenement.delta / 1000 * 200; 
+
+        function rafraichirJeu(evenement) {
+            deplacementActuel = evenement.delta / 1000 * 200;
             hero.deplacer(deplacementActuel);
             hero.Chute();
-            if(mode == "coop")
-            {
-                if(numeroJoueur == 1)
-                {
+            if (mode == "coop") {
+                if (numeroJoueur == 1) {
                     serveur.setVariable("xJ1", hero.getXActuel);
                     serveur.setVariable("yJ1", hero.getYActuel);
                     coequipier.setX = serveur.getXJ2();
                     coequipier.setY = serveur.getYJ2();
-                }
-                else if(numeroJoueur == 2)
-                {
+                } else if (numeroJoueur == 2) {
                     serveur.setVariable('xJ2', hero.getXActuel);
                     serveur.setVariable('yJ2', hero.getYActuel);
                     coequipier.setX = serveur.getXJ1();
@@ -155,60 +127,53 @@
 
             }
 
-            for(i = 0; i != tiles.length; i++)
-            {
-                if(hero.getRepresantation().intersects(tiles[i].getRepresentation()))
-                {
+            for (i = 0; i != tiles.length; i++) {
+                if (hero.getRepresantation().intersects(tiles[i].getRepresentation())) {
                     tileEnCollision++;
                 }
             }
-            if(tileEnCollision > 0)
-            {
+            if (tileEnCollision > 0) {
                 hero.setGrounded(true);
-            }
-            else
-            {
+            } else {
                 hero.setGrounded(false);
             }
             tileEnCollision = 0;
 
-            if(hero.getRepresantation().intersects(ennemi.getRepresantation()))
+            if (hero.getRepresantation().intersects(ennemi.getRepresantation()))
                 window.location.hash = '#perdu';
 
-            else if(hero.getRepresantation().intersects(ennemi.getRepresantation()) && hero.gobe())
+            else if (hero.getRepresantation().intersects(ennemi.getRepresantation()) && hero.gobe())
                 window.location.hash = '#gagner';
 
             scene.update(evenement);
 
-        }    
+        }
 
         var hero = new PersonnagePrincipal(scene);
-        if(mode == "coop")
+        if (mode == "coop")
             var coequipier = new PersonnagePrincipal(scene);
-        var ennemi = new Ennemi(scene); 
+        var ennemi = new Ennemi(scene);
         var monInterval = setInterval(
             function() {
-                if(hero.estCharge && ennemi.estCharge){
+                if (hero.estCharge && ennemi.estCharge) {
                     hero.afficher();
-                    if(mode == "coop")
+                    if (mode == "coop")
                         coequipier.afficher();
                     ennemi.afficher();
-                    createjs.Ticker.addEventListener("tick", rafraichirJeu); 
+                    createjs.Ticker.addEventListener("tick", rafraichirJeu);
 
                 }
             });
 
 
-        var TOUCHE_GAUCHE = 37; 
+        var TOUCHE_GAUCHE = 37;
         var TOUCHE_DROITE = 39;
         var TOUCHE_ESPACE = 32;
         var TOUCHE_CONTROLE = 17;
 
-        function gererToucheEnfoncee(evenement)
-        {
+        function gererToucheEnfoncee(evenement) {
 
-            switch(evenement.keyCode)
-            {
+            switch (evenement.keyCode) {
                 case TOUCHE_GAUCHE:
 
                     hero.deplacerGauche();
@@ -231,11 +196,9 @@
         }
 
 
-        function gererToucheRelachee(evenement)
-        {
+        function gererToucheRelachee(evenement) {
 
-            switch(evenement.keyCode)
-            {
+            switch (evenement.keyCode) {
                 case TOUCHE_GAUCHE:
 
                     hero.metreEnAttente();
@@ -259,20 +222,17 @@
 
         this.document.onkeydown = gererToucheEnfoncee;
         this.document.onkeyup = gererToucheRelachee;
-        function creerNiveau()
-        {   
-            var i ;
-            var j ;
+
+        function creerNiveau() {
+            var i;
+            var j;
             var x = 0;
             var y = 0;
             var indiceLevel = 0;
             var indiceTiles = 0;
-            for(i = 0; i < 6; i++)
-            {
-                for(j = 0 ; j < 10; j++)
-                {
-                    if(level[indiceLevel] == 1)
-                    {
+            for (i = 0; i < 6; i++) {
+                for (j = 0; j < 10; j++) {
+                    if (level[indiceLevel] == 1) {
                         tiles[indiceTiles] = new Plateforme(scene);
                         tiles[indiceTiles].x = x;
                         tiles[indiceTiles].y = y;
@@ -285,19 +245,16 @@
                 x = 0;
             }
             setInterval(
-                function(){
+                function() {
                     var nombre = 0;
 
-                    for(i = 0 ; i < tiles.length; i++)
-                    {
-                        if(tiles[i].estCharge())
+                    for (i = 0; i < tiles.length; i++) {
+                        if (tiles[i].estCharge())
                             nombre++;
                     }
 
-                    if(nombre == tiles.length)
-                    {
-                        for(i = 0; i != tiles.length; i++)
-                        {
+                    if (nombre == tiles.length) {
+                        for (i = 0; i != tiles.length; i++) {
                             tiles[i].setPosition();
                             tiles[i].afficher();
                         }

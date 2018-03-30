@@ -111,11 +111,11 @@ function PersonnagePrincipal(scene)
     }
     this.getXActuel = function()
     {
-        return xActuel;
+        return animationActuel.x;
     }
     this.getYActuel = function ()
     {
-        return yActuel;
+        return animationActuel.y;
     }
     this.setX = function (valeur)
     {
